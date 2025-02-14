@@ -1,0 +1,24 @@
+name: CI Pipeline - Build & Push Docker Image
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      image:
+      env:
+        USER: ${{ secrets.USER }}
+        PASS: ${{ secrets.PASS }}   
+      run: |
+      docker build . --file Dockerfile --tag bhavyar2001/cidemoassignment:v1
+      docker login -u $USER -p $PASS    
+      docker push bhavyar2001/cidemoassignment:v1
