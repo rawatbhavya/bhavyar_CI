@@ -1,24 +1,24 @@
-name: CI Pipeline - Build & Push Docker Image
+name: Docker Image CI
+ 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
-
+    branches: [ main ]
+ 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
+ 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+ 
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.PASS }}" | docker login -u "${{ secrets.USER }}" --password-stdin
+ 
     - name: Build the Docker image
-      image:
-      env:
-        USER: ${{ secrets.USER }}
-        PASS: ${{ secrets.PASS }}   
-      run: 
-      docker build -t --file Dockerfile --tag bhavyar2001/cidemoassignment
-      docker login -u $USER -p $PASS    
-      docker push bhavyar2001/cidemoassignment
+      run: docker build . --file Dockerfile --tag bhavyar2001/cidemobhavs
+ 
+    - name: Push Docker Image
+      run: docker push bhavyar2001/cidemobhavs
