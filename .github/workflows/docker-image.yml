@@ -18,7 +18,7 @@ jobs:
       env:
         USER: ${{ secrets.USER }}
         PASS: ${{ secrets.PASS }}   
-      run: |
-      docker build . --file Dockerfile --tag bhavyar2001/cidemoassignment:v1
+      run: 
+      docker build -t --file Dockerfile --tag bhavyar2001/cidemoassignment
       docker login -u $USER -p $PASS    
-      docker push bhavyar2001/cidemoassignment:v1
+      docker push bhavyar2001/cidemoassignment
